@@ -17,7 +17,10 @@ import {
   Stack,
 } from "@mui/material"
 import { ArrowBack, Save, Inventory } from "@mui/icons-material"
-
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 export default function Cadastro() {
@@ -74,8 +77,8 @@ export default function Cadastro() {
   return (
     <Container maxWidth="md" sx={{ minHeight: "100vh", py: 4 }}>
       <Box sx={{ mb: 4 }}>
-        <Stack direction={'column'} sx={{display: 'flex', mb: 2, gap: 5}}>
-          <Button variant="outlined" startIcon={<ArrowBack />} sx={{width: '20%'}} onClick={() => navigate('/')}>
+        <Stack direction={'column'} sx={{ display: 'flex', mb: 2, gap: 5 }}>
+          <Button variant="outlined" startIcon={<ArrowBack />} sx={{ width: '20%' }} onClick={() => navigate('/')}>
             Voltar ao Menu
           </Button>
           <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
@@ -120,7 +123,7 @@ export default function Cadastro() {
                     variant="outlined"
                   />
                 </Grid>
-               
+
                 <Grid size={{ xs: 12, md: 6 }}>
                   <TextField
                     fullWidth
@@ -147,8 +150,33 @@ export default function Cadastro() {
                     variant="outlined"
                   />
                 </Grid>
-                 <Grid size={{ xs: 12, md: 12 }}>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs} >
+                    <DemoContainer components={['DatePicker']} >
+                      <DatePicker
+                        
+                        label="Data de validade"
+                        sx={{
+                          pt: 0,
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: 'green',
+                            },
+                            '&:hover fieldset': {
+                              borderColor: 'green',
+                            },
+                            '&.Mui-focused fieldset': {
+                              borderColor: 'green',
+                            },
+                          },
+                        }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </Grid>
+                <Grid size={{ xs: 12, md: 8 }}>
                   <TextField
+                  margin='dense'
                     fullWidth
                     label="Descrição"
                     name="descricao"

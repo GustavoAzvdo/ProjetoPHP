@@ -32,7 +32,7 @@ interface Produto {
   preco: number
   categoria: string
   estoque: number
-  dataCadastro: string
+  dataValidade: string
 }
 
 
@@ -52,7 +52,7 @@ export default function Consulta() {
         preco: 1299.99,
         categoria: "Eletrônicos",
         estoque: 15,
-        dataCadastro: "2024-01-15",
+        dataValidade: "2024-01-15",
       },
       {
         id: 2,
@@ -61,7 +61,7 @@ export default function Consulta() {
         preco: 2499.9,
         categoria: "Informática",
         estoque: 8,
-        dataCadastro: "2024-01-20",
+        dataValidade: "2024-01-20",
       },
       {
         id: 3,
@@ -70,7 +70,7 @@ export default function Consulta() {
         preco: 89.9,
         categoria: "Roupas",
         estoque: 0,
-        dataCadastro: "2024-01-25",
+        dataValidade: "2024-01-25",
       },
       {
         id: 4,
@@ -79,7 +79,7 @@ export default function Consulta() {
         preco: 299.99,
         categoria: "Eletrônicos",
         estoque: 3,
-        dataCadastro: "2024-02-01",
+        dataValidade: "2024-02-01",
       },
     ]
 
@@ -156,7 +156,7 @@ export default function Consulta() {
                       <TableCell>Preço</TableCell>
                       <TableCell>Estoque</TableCell>
                       <TableCell>Status</TableCell>
-                      <TableCell>Data Cadastro</TableCell>
+                      <TableCell>Data Validade</TableCell>
                       <TableCell align="right">Ações</TableCell>
                     </TableRow>
                   </TableHead>
@@ -211,7 +211,7 @@ export default function Consulta() {
                             <TableCell>
                               <Chip label={statusEstoque.label} color={statusEstoque.color} size="small" />
                             </TableCell>
-                            <TableCell>{new Date(produto.dataCadastro).toLocaleDateString("pt-BR")}</TableCell>
+                            <TableCell>{new Date(produto.dataValidade).toLocaleDateString("pt-BR")}</TableCell>
                             <TableCell align="right">
                               <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
                                 <IconButton size="small" color="primary">
