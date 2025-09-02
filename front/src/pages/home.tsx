@@ -114,7 +114,7 @@ export default function HomePage() {
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1 }}>
 
                         <Typography variant="body2" color="text.secondary">
-                            Desenvolvido por Gustavo Azevedo
+                            Desenvolvido por Gustavo Azevedo & Jhonathan William
                         </Typography>
                     </Box>
                 </Box>

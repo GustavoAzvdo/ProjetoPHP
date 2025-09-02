@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import {
@@ -16,7 +15,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Chip,
   IconButton,
   InputAdornment,
   CircularProgress,
@@ -28,10 +26,7 @@ import { ArrowBack, Search, LocationSearching, Edit, Delete } from "@mui/icons-m
 interface Produto {
   id: number
   nome: string
-  descricao: string
   preco: number
-  categoria: string
-  estoque: number
   dataValidade: string
 }
 
@@ -48,37 +43,26 @@ export default function Consulta() {
       {
         id: 1,
         nome: "Smartphone Samsung Galaxy",
-        descricao: "Smartphone com 128GB de armazenamento e câmera de 64MP",
+
         preco: 1299.99,
-        categoria: "Eletrônicos",
-        estoque: 15,
         dataValidade: "2024-01-15",
       },
       {
         id: 2,
         nome: "Notebook Dell Inspiron",
-        descricao: "Notebook com processador Intel i5 e 8GB de RAM",
         preco: 2499.9,
-        categoria: "Informática",
-        estoque: 8,
         dataValidade: "2024-01-20",
       },
       {
         id: 3,
         nome: "Camiseta Polo",
-        descricao: "Camiseta polo masculina 100% algodão",
         preco: 89.9,
-        categoria: "Roupas",
-        estoque: 0,
         dataValidade: "2024-01-25",
       },
       {
         id: 4,
         nome: "Fone de Ouvido Bluetooth",
-        descricao: "Fone sem fio com cancelamento de ruído",
         preco: 299.99,
-        categoria: "Eletrônicos",
-        estoque: 3,
         dataValidade: "2024-02-01",
       },
     ]
@@ -91,21 +75,16 @@ export default function Consulta() {
 
   const produtosFiltrados = produtos.filter(
     (produto) =>
-      produto.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-      produto.categoria.toLowerCase().includes(filtro.toLowerCase()),
+      produto.nome.toLowerCase().includes(filtro.toLowerCase())
+
   )
 
-  const getStatusEstoque = (estoque: number) => {
-    if (estoque === 0) return { label: "Sem estoque", color: "error" as const }
-    if (estoque <= 5) return { label: "Estoque baixo", color: "warning" as const }
-    return { label: "Em estoque", color: "success" as const }
-  }
 
   return (
     <Container maxWidth="xl" sx={{ minHeight: "100vh", py: 4 }}>
       <Box sx={{ mb: 4 }}>
-        <Stack  sx={{ display: "flex", alignItems: "start", gap: 2, mb: 3 }}>
-          <Button variant="outlined"  startIcon={<ArrowBack />} onClick={() => navigate('/')}>
+        <Stack sx={{ display: "flex", alignItems: "start", gap: 2, mb: 3 }}>
+          <Button variant="outlined" startIcon={<ArrowBack />} onClick={() => navigate('/')}>
             Voltar ao Menu
           </Button>
           <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
@@ -130,7 +109,7 @@ export default function Consulta() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Search sx={{color: '#c9c9c9'}} />
+                      <Search sx={{ color: '#c9c9c9' }} />
                     </InputAdornment>
                   ),
                 }}
@@ -152,10 +131,7 @@ export default function Consulta() {
                     <TableRow>
                       <TableCell>ID</TableCell>
                       <TableCell>Nome</TableCell>
-                      <TableCell>Categoria</TableCell>
                       <TableCell>Preço</TableCell>
-                      <TableCell>Estoque</TableCell>
-                      <TableCell>Status</TableCell>
                       <TableCell>Data Validade</TableCell>
                       <TableCell align="right">Ações</TableCell>
                     </TableRow>
@@ -173,7 +149,7 @@ export default function Consulta() {
                       </TableRow>
                     ) : (
                       produtosFiltrados.map((produto) => {
-                        const statusEstoque = getStatusEstoque(produto.estoque)
+                       
                         return (
                           <TableRow key={produto.id} sx={{ "&:hover": { backgroundColor: "action.hover" } }}>
                             <TableCell>
@@ -197,20 +173,18 @@ export default function Consulta() {
                                     whiteSpace: "nowrap",
                                   }}
                                 >
-                                  {produto.descricao}
+                                 
                                 </Typography>
                               </Box>
                             </TableCell>
-                            <TableCell>{produto.categoria}</TableCell>
+                           
                             <TableCell>
                               <Typography variant="body2" fontWeight="medium">
                                 R$ {produto.preco.toFixed(2).replace(".", ",")}
                               </Typography>
                             </TableCell>
-                            <TableCell>{produto.estoque}</TableCell>
-                            <TableCell>
-                              <Chip label={statusEstoque.label} color={statusEstoque.color} size="small" />
-                            </TableCell>
+                           
+                           
                             <TableCell>{new Date(produto.dataValidade).toLocaleDateString("pt-BR")}</TableCell>
                             <TableCell align="right">
                               <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
