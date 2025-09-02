@@ -99,7 +99,7 @@ export default function Cadastro() {
           <CardContent>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
               <Grid container spacing={3}>
-                <Grid size={{ xs: 12, md: 6 }}>
+                <Grid size={{ xs: 12, md: 12 }}>
                   <TextField
                     fullWidth
                     label="Nome do Produto"
@@ -111,21 +111,11 @@ export default function Cadastro() {
                     variant="outlined"
                   />
                 </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
-                  <TextField
-                    fullWidth
-                    label="Categoria"
-                    name="categoria"
-                    value={formData.categoria}
-                    onChange={handleInputChange}
-                    placeholder="Ex: Eletrônicos, Roupas, etc."
-                    required
-                    variant="outlined"
-                  />
-                </Grid>
+               
 
                 <Grid size={{ xs: 12, md: 6 }}>
                   <TextField
+                    margin='dense'
                     fullWidth
                     label="Preço (R$)"
                     name="preco"
@@ -138,25 +128,15 @@ export default function Cadastro() {
                     variant="outlined"
                   />
                 </Grid>
+              
                 <Grid size={{ xs: 12, md: 6 }}>
-                  <TextField
-                    fullWidth
-                    label="Quantidade em Estoque"
-                    name="estoque"
-                    type="number"
-                    value={formData.estoque}
-                    onChange={handleInputChange}
-                    placeholder="0"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid size={{ xs: 12, md: 4 }}>
                   <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <DemoContainer components={['DatePicker']} >
                       <DatePicker
                         
                         label="Data de validade"
                         sx={{
+                          width: '100%',
                           pt: 0,
                           '& .MuiOutlinedInput-root': {
                             '& fieldset': {
@@ -174,20 +154,7 @@ export default function Cadastro() {
                     </DemoContainer>
                   </LocalizationProvider>
                 </Grid>
-                <Grid size={{ xs: 12, md: 8 }}>
-                  <TextField
-                  margin='dense'
-                    fullWidth
-                    label="Descrição"
-                    name="descricao"
-                    value={formData.descricao}
-                    onChange={handleInputChange}
-                    placeholder="Descreva as características do produto"
-                    multiline
-                    rows={3}
-                    variant="outlined"
-                  />
-                </Grid>
+               
               </Grid>
 
               <Box sx={{ display: "flex", gap: 2, mt: 4 }}>
