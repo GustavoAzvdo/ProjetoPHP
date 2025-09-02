@@ -2,6 +2,11 @@
 import type React from "react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+
+// api
+
+import axios from 'axios'
+
 import {
   Card,
   CardContent,
@@ -21,17 +26,26 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from "dayjs"
+import utc from 'dayjs/plugin/utc';
 
+
+
+
+import 'dayjs/locale/pt-br';
 
 export default function Cadastro() {
+  dayjs.extend(utc);
+  const cadastrarProduto = async (product: { name_pro: string, value_pro: number, date_pro: string }) => {
+    return axios.post('http://localhost:8080/cadastro-pdo/controller/ProductController.php', product);
+  };
+
   const navigate = useNavigate();
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" as "success" | "error" })
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({  
     nome: "",
-    descricao: "",
     preco: "",
-    categoria: "",
-    estoque: "",
+    validade: null as Dayjs | null
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,43 +56,58 @@ export default function Cadastro() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleDateChange = (date: Dayjs | null) => {
+    setFormData((prev) => ({
+      ...prev,
+      validade: date,
+    }))
+  }
 
-    // Validação básica
-    if (!formData.nome || !formData.preco || !formData.categoria) {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await cadastrarProduto({
+        name_pro: formData.nome,
+        value_pro: Number(formData.preco),
+        date_pro: formData.validade ? dayjs.utc(formData.validade).format("YYYY-MM-DD") : ""
+      });
+      console.log(response)
+      if (response.data.message === 'Product created successfully') {
+        setSnackbar({
+          open: true,
+          message: `O produto "${formData.nome}" foi cadastrado com sucesso.`,
+          severity: "success",
+        });
+        setFormData({
+          nome: "",
+          validade: null,
+          preco: "",
+
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: response.data.message,
+          severity: "error",
+        });
+      }
+    } catch (error) {
       setSnackbar({
         open: true,
-        message: "Por favor, preencha todos os campos obrigatórios.",
+        message: "Erro ao cadastrar produto.",
         severity: "error",
-      })
-      return
+      });
     }
+  };
 
-    // Simular salvamento no banco de dados
-    console.log("Dados do produto:", formData)
 
-    setSnackbar({
-      open: true,
-      message: `O produto "${formData.nome}" foi cadastrado com sucesso.`,
-      severity: "success",
-    })
-
-    // Limpar formulário
-    setFormData({
-      nome: "",
-      descricao: "",
-      preco: "",
-      categoria: "",
-      estoque: "",
-    })
-  }
 
   return (
     <Container maxWidth="md" sx={{ minHeight: "100vh", py: 4 }}>
       <Box sx={{ mb: 4 }}>
         <Stack direction={'column'} sx={{ display: 'flex', mb: 2, gap: 5 }}>
-          <Button variant="outlined" startIcon={<ArrowBack />} sx={{ width: '20%' }} onClick={() => navigate('/')}>
+          <Button variant="outlined" startIcon={<ArrowBack />} sx={{ width: {xs: '100%', sm: '50%', md: '20%'} }} onClick={() => navigate('/')}>
             Voltar ao Menu
           </Button>
           <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
@@ -111,7 +140,7 @@ export default function Cadastro() {
                     variant="outlined"
                   />
                 </Grid>
-               
+
 
                 <Grid size={{ xs: 12, md: 6 }}>
                   <TextField
@@ -128,12 +157,15 @@ export default function Cadastro() {
                     variant="outlined"
                   />
                 </Grid>
-              
+
                 <Grid size={{ xs: 12, md: 6 }}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs} >
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
                     <DemoContainer components={['DatePicker']} >
                       <DatePicker
-                        
+
+                        value={formData.validade ?? null}
+                        onChange={(date) => handleDateChange(dayjs(date))}
+                        format="DD/MM/YYYY" // aqui força o formato brasileiro
                         label="Data de validade"
                         sx={{
                           width: '100%',
@@ -154,14 +186,14 @@ export default function Cadastro() {
                     </DemoContainer>
                   </LocalizationProvider>
                 </Grid>
-               
+
               </Grid>
 
               <Box sx={{ display: "flex", gap: 2, mt: 4 }}>
                 <Button type="submit" variant="contained" size="large" startIcon={<Save />} sx={{ flex: 1 }}>
                   Cadastrar Produto
                 </Button>
-                <Button type="button" variant="outlined" size="large" >
+                <Button type="button" variant="outlined" size="large" onClick={() => navigate('/')} >
                   Cancelar
                 </Button>
               </Box>
