@@ -26,16 +26,18 @@ O sistema utiliza um **banco de dados MySQL** para armazenar os produtos cadastr
 
 ## 📦 Como Executar
 
-⚠️ Certifique-se que seu PHP esteja na versão 8.3.14!
-Caso não esteja:
-➡️ Quando for iniciar o server no terminal, use local onde esta o seu php.exe na versao 8.3.14
-➡️ C:\wamp64\bin\php\php8.3.14\php.exe) -S localhost:8080 -t .
-
 ### 🔹 Backend (PHP)
+⚠️ Certifique-se que seu PHP esteja na versão 8.3.14!
+
+Caso não esteja:
+- ➡️ Acesse e faça os comandos dentro da pasta `back`;
+- ➡️ Quando for iniciar o server no terminal, use o local onde esta o seu php.exe na versao 8.3.14;
+- ➡️ Ex: C:\wamp64\bin\php\php8.3.14\php.exe) -S localhost:8080 -t .
+  
 1. Configure o servidor PHP (Apache/Nginx).  
 2. Configure o banco de dados MySQL:  
    - Crie o banco.  
-   - Importe o arquivo `dpdo_php.sql`  
+   - Importe o arquivo `pdo_php.sql`  
 3. Atualize as credenciais do banco no arquivo de conexão PHP.  
 
 ### 🔹 Frontend (React + TypeScript)
