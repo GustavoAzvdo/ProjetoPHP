@@ -8,7 +8,7 @@ O sistema utiliza um **banco de dados MySQL** para armazenar os produtos cadastr
 ## 🚀 Tecnologias Utilizadas
 
 - **Frontend**: React + TypeScript + Material UI  
-- **Backend**: PHP  
+- **Backend**: PHP 8.3.14
 - **Banco de Dados**: MySQL  
 - **Comunicação**: Axios para requisições HTTP  
 
@@ -26,18 +26,20 @@ O sistema utiliza um **banco de dados MySQL** para armazenar os produtos cadastr
 
 ## 📦 Como Executar
 
-⚠️ Faça o clone do repositorio do backend em uma pasta separada: [🔗 Repositório no GitHub](https://github.com/Jhonathan-Will/cadastro-pdo.git)
+⚠️ Certifique-se que seu PHP esteja na versão 8.3.14!
+Caso não esteja:
+➡️ Quando for iniciar o server no terminal, use local onde esta o seu php.exe na versao 8.3.14
+➡️ C:\wamp64\bin\php\php8.3.14\php.exe) -S localhost:8080 -t .
 
 ### 🔹 Backend (PHP)
-1. Clone o repositório.  
-2. Configure o servidor PHP (Apache/Nginx).  
-3. Configure o banco de dados MySQL:  
+1. Configure o servidor PHP (Apache/Nginx).  
+2. Configure o banco de dados MySQL:  
    - Crie o banco.  
-   - Importe o arquivo `database.sql` (se existir).  
-4. Atualize as credenciais do banco no arquivo de conexão PHP.  
+   - Importe o arquivo `dpdo_php.sql`  
+3. Atualize as credenciais do banco no arquivo de conexão PHP.  
 
 ### 🔹 Frontend (React + TypeScript)
-1. Acesse a pasta `frontend`.  
+1. Acesse a pasta `front`.  
 2. Instale as dependências:  
    ```bash
    npm install
