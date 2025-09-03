@@ -160,11 +160,27 @@ export default function Consulta() {
     }, 1000)
   }, [])
 
-  const produtosFiltrados = produtos.filter(
-    (produto) =>
-      produto.nome.toLowerCase().includes(filtro.toLowerCase())
+  const produtosFiltrados = produtos.filter((produto) => {
+    const filtroLower = filtro.toLowerCase();
 
-  )
+    // Nome
+    const nomeMatch = produto.nome.toLowerCase().includes(filtroLower);
+
+    // Preço (formata para string com vírgula e ponto)
+    const precoStr = produto.preco.toFixed(2).replace('.', ',');
+    const precoMatch =
+      precoStr.includes(filtroLower) ||
+      produto.preco.toString().includes(filtroLower);
+
+    // Data (formata para pt-BR e ISO)
+    const dataBR = new Date(produto.dataValidade).toLocaleDateString("pt-BR");
+    const dataISO = produto.dataValidade; // yyyy-mm-dd
+    const dataMatch =
+      dataBR.includes(filtroLower) ||
+      dataISO.includes(filtroLower);
+
+    return nomeMatch || precoMatch || dataMatch;
+  });
 
 
   return (
@@ -205,7 +221,7 @@ export default function Consulta() {
               <Box sx={{ width: { xs: "100%", sm: 300 }, mt: { xs: 1, sm: 0 } }}>
                 <TextField
                   sx={{ width: { xs: '100%' } }}
-                  placeholder="Buscar por nome ..."
+                  placeholder="Buscar por nome, preço ou data"
                   value={filtro}
                   onChange={(e) => setFiltro(e.target.value)}
                   size="small"
